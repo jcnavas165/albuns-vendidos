@@ -4,14 +4,179 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Álbuns Mais Vendidos da História</title>
-  <href rel="stylesheet" href="faixas.css"/>
- 
+  <link rel="stylesheet" href="style.css"/>
+  
+
 </head>
 <body>
 
-  <h1> Álbuns Mais Vendidos da História </h1>
-  
-  <script src="faixas.js"></script>
+  <div class="table-container">
+        <table id="albumsTable">
+            <caption>Lista dos 55 álbuns de música mais vendidos da história (Clique nos cabeçalhos para ordenar)</caption>
+            <thead>
+                <tr>
+                    <th onclick="sortTable('pos', 0)" class="num">Posição <span></span></th>
+                    <th onclick="sortTable('artist', 1)">Artista <span></span></th>
+                    <th onclick="sortTable('album', 2)">Álbum <span></span></th>
+                    <th onclick="sortTable('year', 3)" class="num">Ano <span></span></th>
+                    <th onclick="sortTable('sales', 4)" class="num">Vendas (Milhões) <span></span></th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                </tbody>
+        </table>
+    </div>
+
+    <script>
+        let tableData = [
+            { pos: 1, artist: "Pink Floyd", album: "The Dark Side of the Moon", year: 1973, sales: 43.3 },
+            { pos: 2, artist: "Led Zeppelin", album: "Led Zeppelin IV", year: 1971, sales: 36.8 },
+            { pos: 3, artist: "AC/DC", album: "Back in Black", year: 1980, sales: 35.8 },
+            { pos: 4, artist: "Fleetwood Mac", album: "Rumours", year: 1977, sales: 35.5 },
+            { pos: 5, artist: "Alanis Morissette", album: "Jagged Little Pill", year: 1995, sales: 33.6 },
+            { pos: 6, artist: "Pink Floyd", album: "The Wall", year: 1979, sales: 31.3 },
+            { pos: 7, artist: "Dire Straits", album: "Brothers in Arms", year: 1985, sales: 30.9 },
+            { pos: 8, artist: "Guns N’ Roses", album: "Appetite For Destruction", year: 1987, sales: 30.8 },
+            { pos: 9, artist: "Metallica", album: "Metallica", year: 1991, sales: 30.8 },
+            { pos: 10, artist: "Eagles", album: "Hotel California", year: 1976, sales: 30.1 },
+            { pos: 11, artist: "Bruce Springsteen", album: "Born in the U.S.A.", year: 1984, sales: 29.3 },
+            { pos: 12, artist: "Nirvana", album: "Nevermind", year: 1991, sales: 27.8 },
+            { pos: 13, artist: "Meat Loaf", album: "Bat Out of Hell", year: 1977, sales: 27.4 },
+            { pos: 14, artist: "U2", album: "The Joshua Tree", year: 1987, sales: 26.8 },
+            { pos: 15, artist: "The Beatles", album: "Abbey Road", year: 1969, sales: 26.7 },
+            { pos: 16, artist: "Santana", album: "Supernatural", year: 1999, sales: 26.0 },
+            { pos: 17, artist: "Def Leppard", album: "Hysteria", year: 1987, sales: 25.0 },
+            { pos: 18, artist: "The Beatles", album: "Sgt. Pepper’s Lonely Hearts Club Band", year: 1967, sales: 24.8 },
+            { pos: 19, artist: "Eric Clapton", album: "Unplugged", year: 1992, sales: 23.7 },
+            { pos: 20, artist: "Bon Jovi", album: "Slippery When Wet", year: 1986, sales: 23.6 },
+            { pos: 21, artist: "Phil Collins", album: "No Jacket Required", year: 1985, sales: 23.3 },
+            { pos: 22, artist: "Boston", album: "Boston", year: 1976, sales: 22.4 },
+            { pos: 23, artist: "Hootie & The Blowfish", album: "Cracked Rear View", year: 1994, sales: 22.3 },
+            { pos: 24, artist: "Pink Floyd", album: "Wish You Were Here", year: 1975, sales: 22.3 },
+            { pos: 25, artist: "Led Zeppelin", album: "Led Zeppelin II", year: 1969, sales: 21.9 },
+            { pos: 26, artist: "Linkin Park", album: "Hybrid Theory", year: 2000, sales: 20.8 },
+            { pos: 27, artist: "Phil Collins", album: "... But Seriously", year: 1989, sales: 20.8 },
+            { pos: 28, artist: "The Who", album: "Tommy", year: 1969, sales: 20.0 },
+            { pos: 29, artist: "Green Day", album: "Dookie", year: 1994, sales: 19.8 },
+            { pos: 30, artist: "Simon & Garfunkel", album: "Bridge Over Troubled Water", year: 1970, sales: 19.6 },
+            { pos: 31, artist: "The Beatles", album: "The Beatles", year: 1968, sales: 19.0 },
+            { pos: 32, artist: "Guns N’ Roses", album: "Use Your Illusion II", year: 1991, sales: 18.8 },
+            { pos: 33, artist: "Guns N’ Roses", album: "Use Your Illusion I", year: 1991, sales: 18.0 },
+            { pos: 34, artist: "No Doubt", album: "Tragic Kingdom", year: 1995, sales: 18.0 },
+            { pos: 35, artist: "The Cranberries", album: "No Need to Argue", year: 1994, sales: 17.8 },
+            { pos: 36, artist: "Led Zeppelin", album: "Houses of the Holy", year: 1973, sales: 17.7 },
+            { pos: 37, artist: "Oasis", album: "(What’s the Story) Morning Glory?", year: 1995, sales: 17.7 },
+            { pos: 38, artist: "U2", album: "Achtung Baby", year: 1991, sales: 17.5 },
+            { pos: 39, artist: "Peter Frampton", album: "Frampton Comes Alive!", year: 1976, sales: 17.0 },
+            { pos: 40, artist: "Supertramp", album: "Breakfast in America", year: 1979, sales: 16.8 },
+            { pos: 41, artist: "Evanescence", album: "Fallen", year: 2003, sales: 16.7 },
+            { pos: 42, artist: "Red Hot Chili Peppers", album: "Californication", year: 1999, sales: 16.3 },
+            { pos: 43, artist: "Nirvana", album: "MTV Unplugged in New York", year: 1994, sales: 16.1 },
+            { pos: 44, artist: "Blink -182", album: "Enema of the State", year: 1999, sales: 16.0 },
+            { pos: 45, artist: "Blondie", album: "Paralell Lines", year: 1978, sales: 16.0 },
+            { pos: 46, artist: "R.E.M.", album: "Out of Time", year: 1991, sales: 16.0 },
+            { pos: 47, artist: "Led Zeppelin", album: "Led Zeppelin", year: 1969, sales: 15.8 },
+            { pos: 48, artist: "Metallica", album: "... And Justice for All", year: 1988, sales: 15.8 },
+            { pos: 49, artist: "Pearl Jam", album: "Ten", year: 1991, sales: 15.7 },
+            { pos: 50, artist: "Phil Collins", album: "Face Value", year: 1981, sales: 15.6 },
+            /* Adições extras */
+            { pos: 51, artist: "Red Hot Chili Peppers", album: "Blood Sugar Sex Magik", year: 1991, sales: 15.5 },
+            { pos: 52, artist: "Radiohead", album: "OK Computer", year: 1997, sales: 15.2 },
+            { pos: 53, artist: "Aerosmith", album: "Toys in the Attic", year: 1975, sales: 15.0 },
+            { pos: 54, artist: "Foo Fighters", album: "The Colour and the Shape", year: 1997, sales: 14.8 },
+            { pos: 55, artist: "Coldplay", album: "A Rush of Blood to the Head", year: 2002, sales: 14.5 }
+        ];
+        let currentSort = { key: 'pos', asc: true };
+
+        function sortTable(key, colIndex) {
+            if (currentSort.key === key) {
+                currentSort.asc = !currentSort.asc;
+            } else {
+                currentSort.key = key;
+                currentSort.asc = true;
+            }
+
+            // Atualizar setas do cabeçalho
+            const ths = document.querySelectorAll('th span');
+            ths.forEach(span => span.innerText = '');
+            ths[colIndex].innerText = currentSort.asc ? ' ▲' : ' ▼';
+
+            // Ordenar
+            tableData.sort((a, b) => {
+                let valA = a[key];
+                let valB = b[key];
+                if (typeof valA === 'string') { valA = valA.toLowerCase(); valB = valB.toLowerCase(); }
+                if (valA < valB) return currentSort.asc ? -1 : 1;
+                if (valA > valB) return currentSort.asc ? 1 : -1;
+                return 0;
+            });
+
+            renderTable();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            const keys = ['pos', 'artist', 'album', 'year', 'sales'];
+            
+            // Lógica do DESAFIO: Calcular rowspan para dados que se repetem consecutivamente
+            let rowspans = Array.from({length: tableData.length}, () => ({}));
+
+            for (let j = 0; j < keys.length; j++) {
+                let key = keys[j];
+                for (let i = 0; i < tableData.length; i++) {
+                    if (rowspans[i][key] === undefined) {
+                        let span = 1;
+                        for (let k = i + 1; k < tableData.length; k++) {
+                            if (tableData[k][key] === tableData[i][key]) {
+                                span++;
+                            } else {
+                                break;
+                            }
+                        }
+                        rowspans[i][key] = span;
+                        for (let k = i + 1; k < i + span; k++) {
+                            rowspans[k][key] = 0; // Marca para não renderizar o TD
+                        }
+                    }
+                }
+            }
+
+            // Montar HTML da tabela com os rowspans
+            for (let i = 0; i < tableData.length; i++) {
+                let tr = document.createElement('tr');
+
+                keys.forEach(key => {
+                    if (rowspans[i][key] > 0) {
+                        let td = document.createElement('td');
+                        if (rowspans[i][key] > 1) {
+                            td.rowSpan = rowspans[i][key];
+                        }
+                        
+                        if (key === 'pos' || key === 'year' || key === 'sales') {
+                            td.className = 'num';
+                        }
+
+                        if (key === 'sales') {
+                            td.innerText = tableData[i][key].toFixed(1).replace('.', ',');
+                        } else {
+                            td.innerText = tableData[i][key];
+                        }
+                        tr.appendChild(td);
+                    }
+                });
+                tbody.appendChild(tr);
+            }
+        }
+
+        // Renderizar ao carregar a página
+        window.onload = () => {
+            document.querySelectorAll('th span')[0].innerText = ' ▲';
+            renderTable();
+        };
+    </script>
+  /**<scrip src="faixas.js"></script>*/
+    
 
 </body>
 </html>
